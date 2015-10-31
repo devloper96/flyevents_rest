@@ -21,7 +21,7 @@ def sendsms():
 	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
  
 	client.messages.create(to=phoneno, from_="+16504926725", body=code)
-	print("sms")
+	print("sms ")
  	return code
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
