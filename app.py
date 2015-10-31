@@ -2,7 +2,8 @@ from flask import Flask
 from flask import request
 import random
 import string
-from twilio.rest import TwilioRestClient
+import requests
+from exotel import Exotel
 
 app = Flask(__name__)
 
@@ -11,17 +12,16 @@ def hello():
 	return "hello"
 @app.route('/mobileConfirmation')
 def sendsms():
-	phoneno = "+91"+request.args.get('phoneno')
+	phoneno = request.args.get('phoneno')
 	print(phoneno)
 	code = id_generator()	
 	print(code)
-	ACCOUNT_SID = "AC5a8cd025e6a9a49c91a60d8b57fded16" 
-	AUTH_TOKEN = "409ee4348b706cfd238cdafc423943ae" 
- 
-	client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
- 
-	client.messages.create(to=phoneno, from_="+16504926725", body=code)
-	print("sms ")
+
+	#url = 'https://punchitio:2771852343d707d6673d077656c1e27bf857a32e@twilix.exotel.in/v1/Accounts/punchitio/Sms/send'
+	#data = '{"query":{"bool":{"must":[From:"07930256894",To:"'+phoneno+'",Body="'+code+'"]}'
+	client = Exotel('punchitio','2771852343d707d6673d077656c1e27bf857a32e')
+	client.sms('07930256894',phoneno,code)
+	print("sms")
  	return code
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
